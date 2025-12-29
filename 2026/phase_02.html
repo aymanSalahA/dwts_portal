@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Phase 02: Enhancement & Organization</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+            rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+        <style>
+            :root {
+                --sidebar-width: 280px;
+            }
+            body {
+                background-color: #f5f5f5;
+                padding-bottom: 3rem;
+                display: flex;
+            }
+
+            /* Sidebar Styling */
+            #sidebar {
+                width: var(--sidebar-width);
+                height: 100vh;
+                position: fixed;
+                left: 0;
+                top: 0;
+                background-color: #212529;
+                color: #fff;
+                overflow-y: auto;
+                padding: 1rem;
+                z-index: 1000;
+            }
+            #sidebar h5 {
+                color: #6c757d;
+                font-size: 0.8rem;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                margin-top: 1.5rem;
+                margin-bottom: 0.5rem;
+            }
+            #sidebar a {
+                color: #e9ecef;
+                text-decoration: none;
+                display: block;
+                padding: 0.4rem 0.5rem;
+                border-radius: 4px;
+                font-size: 0.9rem;
+            }
+            #sidebar a:hover {
+                background-color: #343a40;
+                color: #fff;
+            }
+            #sidebar a.active {
+                background-color: #0d6efd;
+                color: #fff;
+            }
+
+            /* Main Content Styling */
+            #main-content {
+                margin-left: var(--sidebar-width);
+                padding: 2rem;
+                width: calc(100% - var(--sidebar-width));
+            }
+
+            /* Card Styling */
+            details.doc-card {
+                background: white;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                margin-bottom: 1rem;
+                overflow: hidden;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            }
+            summary.doc-card-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0.75rem 1rem;
+                background-color: #f8f9fa;
+                cursor: pointer;
+                list-style: none;
+                border-bottom: 1px solid #eee;
+            }
+            summary.doc-card-header::-webkit-details-marker {
+                display: none;
+            }
+            .header-content {
+                display: flex;
+                align-items: center;
+                gap: 0.8rem;
+            }
+            .doc-card-body {
+                padding: 1.5rem;
+            }
+
+            /* Indicators */
+            .section-id {
+                font-size: 0.75em;
+                color: #6c757d;
+                font-family: monospace;
+                background: #e9ecef;
+                padding: 2px 6px;
+                border-radius: 4px;
+            }
+
+            /* AI Change Tracking */
+            .ai-refined {
+                background-color: #d4edda;
+                padding: 2px 4px;
+                border-radius: 3px;
+                cursor: help;
+                border-bottom: 1px dotted #28a745;
+            }
+            .ai-created {
+                background-color: #fff3cd;
+                padding: 2px 6px;
+                border-radius: 3px;
+                border: 1px solid #ffeeba;
+            }
+            .ai-omitted {
+                color: #adb5bd;
+                text-decoration: line-through;
+            }
+
+            /* Raw Toggle */
+            .raw-toggle {
+                font-size: 0.8rem;
+                padding: 0.2rem 0.6rem;
+                border: 1px solid #dee2e6;
+                background: white;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+            .raw-toggle:hover {
+                background: #e9ecef;
+            }
+            .raw-view {
+                background-color: #f8f9fa;
+                padding: 1rem;
+                border-radius: 4px;
+                border: 1px dashed #dee2e6;
+                font-family: monospace;
+                font-size: 0.9rem;
+                color: #666;
+                margin-top: 1rem;
+                white-space: pre-wrap;
+            }
+
+            /* UI Components */
+            .timeline {
+                border-left: 2px solid #e9ecef;
+                padding-left: 1.5rem;
+                margin: 1rem 0;
+            }
+            .timeline-item {
+                position: relative;
+                margin-bottom: 1.5rem;
+            }
+            .timeline-item::before {
+                content: "";
+                position: absolute;
+                left: -1.95rem;
+                top: 0.4rem;
+                width: 0.8rem;
+                height: 0.8rem;
+                background: #fff;
+                border: 2px solid #0d6efd;
+                border-radius: 50%;
+            }
+            .resource-link {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.5rem;
+                border: 1px solid #eee;
+                border-radius: 4px;
+                margin-bottom: 0.5rem;
+                text-decoration: none;
+                color: #495057;
+            }
+            .resource-link:hover {
+                background-color: #f8f9fa;
+                color: #0d6efd;
+            }
+
+            /* Tables */
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 1rem 0;
+            }
+            th,
+            td {
+                border: 1px solid #ddd;
+                padding: 0.75rem;
+                text-align: left;
+            }
+            th {
+                background-color: #f8f9fa;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Sidebar Navigation -->
+        <nav id="sidebar">
+            <h4 class="mb-4 px-2">📑 Project DWTS</h4>
+
+            <h5>📁 Overview</h5>
+            <a href="#section-01">2025 Review & Summary</a>
+            <a href="#section-12">Quick Notes & Plans</a>
+
+            <h5>📁 Career & Work</h5>
+            <a href="#section-02">Career Strategy</a>
+            <a href="#section-05">Daily Gear Project</a>
+            <a href="#section-06">Local Ecommerce</a>
+
+            <h5>📁 Learning Paths</h5>
+            <a href="#section-03">AI Learning Plan</a>
+            <a href="#section-04">Flutter Development</a>
+            <a href="#section-08">Topics to Learn</a>
+            <a href="#section-07">Reading List (Software)</a>
+
+            <h5>📁 Languages</h5>
+            <a href="#section-09">English Enhancement</a>
+            <a href="#section-10">Russian Learning</a>
+
+            <h5>📁 Misc</h5>
+            <a href="#section-11">Digital Declutter</a>
+            <a href="#section-13">Assets & Attachments</a>
+        </nav>
+
+        <!-- Main Content -->
+        <main id="main-content">
+            <!-- Section 01: 2025 Review -->
+            <details class="doc-card" id="section-01" open>
+                <summary class="doc-card-header">
+                    <div class="header-content">
+                        <span class="section-id">#section-01</span>
+                        <span class="fw-bold">2025 Review & Summary</span>
+                    </div>
+                    <button
+                        onclick="toggleView(event, 'section-01')"
+                        class="raw-toggle">
+                        Show Raw
+                    </button>
+                </summary>
+                <div class="doc-card-body">
+                    <!-- Enhanced View -->
+                    <div id="enhanced-section-01" class="enhanced-view">
+                        <p>
+                            This is a file for 2026 planning, but before that
+                            <span class="ai-refined" title="was: i">I</span>
+                            need to write a summary of 2025 and events and some
+                            points:
+                        </p>
+
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <strong>Beginning of Year:</strong> Year started
+                                well, working full time and part time. I was
+                                dating Shaimaa, then at the end of January we
+                                were
+                                <span class="ai-refined" title="was: seperated"
+                                    >separated</span
+                                >
+                                because of a big issue.
+                            </div>
+                            <div class="timeline-item">
+                                <strong>March:</strong> Married with Nahed, this
+                                marriage lasted 10 days and was the worst thing
+                                in the year, my wish turned into a nightmare.
+                            </div>
+                            <div class="timeline-item">
+                                <strong>August:</strong> Part time work
+                                decreased gradually till August.
+                                <span class="ai-refined" title="was: renwerd"
+                                    >Renewed</span
+                                >
+                                my contract for my job, but seems that on Feb or
+                                January 2026 things are not stable and the
+                                systems
+                                <span class="ai-refined" title="was: replacemet"
+                                    >replacement</span
+                                >
+                                is about to happen.
+                            </div>
+                            <div class="timeline-item">
+                                <strong>September:</strong> Asmma,
+                                <span class="ai-refined" title="was: whchi"
+                                    >which</span
+                                >
+                                is
+                                <span class="ai-refined" title="was: mostafa"
+                                    >Mostafa</span
+                                >'s wife, is gone from earth; he killed her on
+                                <span class="ai-refined" title="was: septemeber"
+                                    >September</span
+                                >.
+                            </div>
+                            <div class="timeline-item">
+                                <strong>November:</strong> Studied Flutter at
+                                NTI,
+                                <span class="ai-refined" title="was: whchi"
+                                    >which</span
+                                >
+                                reminded me of ITI and same people mindset.
+                            </div>
+                            <div class="timeline-item">
+                                <strong>December:</strong> My
+                                <span class="ai-refined" title="was: birthdat"
+                                    >birthday</span
+                                >
+                                was 16 December, for the first time this year,
+                                no one literally sent me happy birthday.
+                            </div>
+                            <div class="timeline-item">
+                                <strong>General Events:</strong>
+                                <ul>
+                                    <li>
+                                        I kept on the year working on my
+                                        personal project, sometimes heavy,
+                                        sometimes slowly but made good progress.
+                                    </li>
+                                    <li>
+                                        Went to lots of doctors for my health
+                                        checking.
+                                    </li>
+                                    <li>
+                                        Went to Egyptian
+                                        <span
+                                            class="ai-refined"
+                                            title="was: musium"
+                                            >Museum</span
+                                        >.
+                                    </li>
+                                    <li>
+                                        Adham got engaged, Maged got married.
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Raw View -->
+                    <div
+                        id="raw-section-01"
+                        class="raw-view"
+                        style="display: none">
+                        This is a File for 2026 planning, but before that i need
+                        to write a summary of 2025 and events and some points :
+                        1. year started well ,working full time and part time ,
+                        I was dating Shaimaa, then at end of january we were
+                        seperated because of big issue 2. part time work
+                        decreased gradually till august 3. I kept on the year
+                        working on my personal project , sometimes heavy ,
+                        sometimes slowly but made good progress 4. married at
+                        march with Nahed , this marriage lasted 10 days and was
+                        worst thing in the year ,my wish turned into a nightmare
+                        5. went to lots of doctors for my health checking 6.
+                        studied flutter at NTI , whchi reminded me of ITI and
+                        same people mindset , it was at nov , 7. my birthdat was
+                        16 december , for the first time this year , no one
+                        literally sent me happy birthday 8. went t egpytian
+                        musium 9. Asmma , which is mostafa wife is gone from
+                        earth , he killed her on septemeber 10. adham got
+                        engaged , maged got married 11. renwerd my contract for
+                        my job at august , but seems that on feb or january 2026
+                        things are not stable and the systems replacemet are
+                        about to happen
+                    </div>
+                </div>
+            </details>
+
+            <!-- Section 02: Career -->
+            <details class="doc-card" id="section-02" open>
+                <summary class="doc-card-header">
+                    <div class="header-content">
+                        <span class="section-id">#section-02</span>
+                        <span class="fw-bold">Career Strategy</span>
+                    </div>
+                    <button
+                        onclick="toggleView(event, 'section-02')"
+                        class="raw-toggle">
+                        Show Raw
+                    </button>
+                </summary>
+                <div class="doc-card-body">
+                    <div id="enhanced-section-02" class="enhanced-view">
+                        <div
+                            class="alert alert-info border-start border-info border-4 bg-light">
+                            <strong>Goal:</strong> Improve PHP and add JS
+                            skills. Find a new job as replacement is likely.
+                        </div>
+
+                        <h5>Action Plan</h5>
+                        <ul class="list-group mb-3">
+                            <li class="list-group-item">
+                                <input
+                                    class="form-check-input me-1"
+                                    type="checkbox"
+                                    value=""
+                                    id="firstCheckbox" />
+                                <label
+                                    class="form-check-label"
+                                    for="firstCheckbox"
+                                    >Put some
+                                    <span
+                                        class="ai-refined"
+                                        title="was: companeis"
+                                        >companies</span
+                                    >
+                                    in a list and check their tech stack and
+                                    just study for their stack</label
+                                >
+                            </li>
+                            <li class="list-group-item">
+                                <input
+                                    class="form-check-input me-1"
+                                    type="checkbox"
+                                    value=""
+                                    id="secondCheckbox" />
+                                <label
+                                    class="form-check-label"
+                                    for="secondCheckbox"
+                                    >Put the Goal of learning Tools for
+                                    relocation Companies and Work for it</label
+                                >
+                            </li>
+                            <li class="list-group-item">
+                                <input
+                                    class="form-check-input me-1"
+                                    type="checkbox"
+                                    value=""
+                                    id="thirdCheckbox" />
+                                <label
+                                    class="form-check-label"
+                                    for="thirdCheckbox"
+                                    >Edit the CV for that</label
+                                >
+                            </li>
+                            <li class="list-group-item">
+                                <input
+                                    class="form-check-input me-1"
+                                    type="checkbox"
+                                    value=""
+                                    id="fourthCheckbox" />
+                                <label
+                                    class="form-check-label"
+                                    for="fourthCheckbox"
+                                    >Search for another job (study and interview
+                                    plan needed)</label
+                                >
+                            </li>
+                        </ul>
+
+                        <div class="callout p-3 bg-white border rounded">
+                            <strong>Note on Study Plans:</strong>
+                            <p class="mb-0 mt-2">
+                                As a PHP developer it is a must to find a new
+                                job. I made some plans to refresh PHP and
+                                Laravel for the interviews, tried to split into
+                                sprints, but AI is still generating lists with
+                                generic topics. I want the lists with granular
+                                and atomic topics [starting from variable topic
+                                and adding more topics
+                                <span
+                                    class="ai-refined"
+                                    title="was: incemetally"
+                                    >incrementally</span
+                                >
+                                for refreshing/studying].
+                            </p>
+                        </div>
+                    </div>
+                    <div
+                        id="raw-section-02"
+                        class="raw-view"
+                        style="display: none">
+                        تحسين php وإضافة js also need to put some companeis in a
+                        list and check their tech stack and just study for their
+                        stack Put the Goal of learning Tools for relocation
+                        Companies and Work for it need to edit the cv for that i
+                        need to search for another job , I will be replaced soon
+                        [need study and interview plan ] as a php developer it
+                        is a must to find a new job , I made some plans to
+                        refresh php and laravel for the interviews , tried to
+                        split into sprints , but AI is still generating lists
+                        with generic topics , I want the lists with granular and
+                        atomic topics [ starting from variable topic and adding
+                        more topics incemetally for refreshing/studying ]
+                    </div>
+                </div>
+            </details>
+
+            <!-- Section 12: Quick Notes (Moved nearer to career/overview layout wise) -->
+            <details class="doc-card" id="section-12" open>
+                <summary class="doc-card-header">
+                    <div class="header-content">
+                        <span class="section-id">#section-12</span>
+                        <span class="fw-bold">Quick Notes & Plans</span>
+                    </div>
+                    <button
+                        onclick="toggleView(event, 'section-12')"
+                        class="raw-toggle">
+                        Show Raw
+                    </button>
+                </summary>
+                <div class="doc-card-body">
+                    <div id="enhanced-section-12" class="enhanced-view">
+                        <p>
+                            These are quick notes to mention plans that I will
+                            need to put some time to make a plan or habit for
+                            later:
+                        </p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                1. <strong>DWTS Project:</strong> Need to
+                                <span class="ai-refined" title="was: kep"
+                                    >keep</span
+                                >
+                                working on format and make a repo for each use
+                                case and be specific for each case.
+                            </li>
+                            <li class="list-group-item">
+                                2. <strong>Laptop Update:</strong> Need to call
+                                Ahmed Rabie about the laptop. Will I work in
+                                2026 or is this
+                                <span class="ai-refined" title="was: enogh"
+                                    >enough</span
+                                >?
+                            </li>
+                            <li class="list-group-item">
+                                3. <strong>Habits Reset:</strong> Will need to
+                                remove all habits/lists and put them from
+                                scratch, slowly, to make them real habits with
+                                reasonable frequency.
+                            </li>
+                            <li class="list-group-item">
+                                4. <strong>Dependencies:</strong> After writing
+                                all plans,
+                                <span class="ai-refined" title="was: remeber"
+                                    >remember</span
+                                >
+                                some will be done or start with while others
+                                will be delayed. Check WHAT plans DEPEND on
+                                others.
+                            </li>
+                            <li class="list-group-item">
+                                5. <strong>CV Automation:</strong> Find a way to
+                                automate CV versions (Latex?).
+                            </li>
+                            <li class="list-group-item">
+                                6. <strong>Route Course:</strong> Need to study
+                                Route Course (50 GB), but delay it for now as
+                                some plans are more urgent.
+                            </li>
+                            <li class="list-group-item">
+                                7. <strong>Unplanned Items:</strong> Even things
+                                without a clear plan must be put in a "Things to
+                                plan for" list.
+                            </li>
+                        </ul>
+                    </div>
+                    <div
+                        id="raw-section-12"
+                        class="raw-view"
+                        style="display: none">
+                        Those are quick notes to mention plans that i will need
+                        to put some time to make a a plan or habit for them
+                        later : 1. DWTs_project need to kep working on and make
+                        a repo for each use case and be specific for each case
+                        2. I need to call Ahmed Rabie about the laptop , will i
+                        work in 2026 or this is enogh ? 3. my habits and tasks
+                        and lists and plans , I will need to remove them all and
+                        put them from scratch , slowly so that I make them real
+                        habits and make the frequency reasonable for my energy
+                        4. after writing all plans or things , remeber some of
+                        them will be done or start with while others will be
+                        delayed for later , and see WHAT plans DEPEND on others
+                        5. I need to find a way that is automated to enable me
+                        to make CV versions [Latex ? what is it] 6. I need to
+                        study Route Course , it is 50 Giga , but not now , maybe
+                        delay it since some plans are more urgent 7. Even the
+                        things that I dont have a clear plan for , I must put
+                        them in a list as [things to plan for] in order to think
+                        about them later
+                    </div>
+                </div>
+            </details>
+
+            <!-- Section 05: Daily Gear -->
+            <details class="doc-card" id="section-05" open>
+                <summary class="doc-card-header">
+                    <div class="header-content">
+                        <span class="section-id">#section-05</span>
+                        <span class="fw-bold">Daily Gear Project</span>
+                    </div>
+                    <button
+                        onclick="toggleView(event, 'section-05')"
+                        class="raw-toggle">
+                        Show Raw
+                    </button>
+                </summary>
+                <div class="doc-card-body">
+                    <div id="enhanced-section-05" class="enhanced-view">
+                        <p>
+                            <strong>Concept:</strong> A habit tracking app
+                            (limitless recurring tasks) to solve the "limited 5
+                            or 7 tasks" issue in paid apps like TickTick.
+                        </p>
+
+                        <h5>Launch Plan</h5>
+                        <ul>
+                            <li>
+                                <strong>Web & Mobile:</strong> Needs to be
+                                launched.
+                            </li>
+                            <li>
+                                <strong>Web:</strong> Steps will be put in a
+                                JSON file.
+                            </li>
+                            <li>
+                                <strong>Flutter App:</strong> Need to learn and
+                                watch a couple of courses before planning and
+                                <span class="ai-refined" title="was: launchning"
+                                    >launching</span
+                                >
+                                MVP.
+                            </li>
+                            <li>
+                                <strong>Reference:</strong> Steps/thoughts are
+                                in `Daily gear` folder (specifically
+                                `PLANFinalizing and Finishing Dgear
+                                Project.json`). This JSON has nearly all fixes
+                                or features needed.
+                            </li>
+                        </ul>
+                    </div>
+                    <div
+                        id="raw-section-05"
+                        class="raw-view"
+                        style="display: none">
+                        What is Daily gear , simply it is habit tracking app
+                        that i made since all apps like ticktick or other habit
+                        apps and others need paid plans for recurring tasks
+                        "only lmitied 5 or 7 tasks" is there an app that is
+                        limitless like dailygear ?I dont know but I made it
+                        anyways 1. Daily gear project needs to be launched [ web
+                        and mobile ], for web there are still some steps that i
+                        will put them in a json file , for the flutter app i
+                        need to learn and watch a couple of courses before
+                        planning and launchning mvp 2. the steps or thoughts are
+                        inside Daily gear folder , in the file called
+                        PLANFinalizing and Finishing Dgear Project.json it has
+                        some useless points and lists or links for similar apps
+                        but this json nearly has all fixes for the project or
+                        features
+                    </div>
+                </div>
+            </details>
+
+            <!-- Section 06: Local Ecommerce -->
+            <details class="doc-card" id="section-06" open>
+                <summary class="doc-card-header">
+                    <div class="header-content">
+                        <span class="section-id">#section-06</span>
+                        <span class="fw-bold">Local Ecommerce Project</span>
+                    </div>
+                    <button
+                        onclick="toggleView(event, 'section-06')"
+                        class="raw-toggle">
+                        Show Raw
+                    </button>
+                </summary>
+                <div class="doc-card-body">
+                    <div id="enhanced-section-06" class="enhanced-view">
+                        <h5>Requirements</h5>
+                        <ul>
+                            <li>
+                                <strong>Platform:</strong> Need to get a good
+                                site and template. Time needed for searching and
+                                <span class="ai-refined" title="was: decising"
+                                    >deciding</span
+                                >
+                                the
+                                <span class="ai-refined" title="was: wesite"
+                                    >website</span
+                                >
+                                or
+                                <span class="ai-refined" title="was: finiding"
+                                    >finding</span
+                                >
+                                template.
+                            </li>
+                            <li>
+                                <strong>Suppliers:</strong> Deal mainly with
+                                Anoon and his products, maybe search for another
+                                one.
+                            </li>
+                        </ul>
+                    </div>
+                    <div
+                        id="raw-section-06"
+                        class="raw-view"
+                        style="display: none">
+                        1. for the ecommerce i need first to get a good site and
+                        template 2. the suppliers to deal with [ mainly with
+                        Anoon and his products , maybe searching another one ]
+                        So I need to put some time for searching and decising
+                        the wesite or finiding template
+                    </div>
+                </div>
+            </details>
+
+            <!-- Section 03: AI Learning -->
+            <details class="doc-card" id="section-03" open>
+                <summary class="doc-card-header">
+                    <div class="header-content">
+                        <span class="section-id">#section-03</span>
+                        <span class="fw-bold">AI Learning Plan</span>
+                    </div>
+                    <button
+                        onclick="toggleView(event, 'section-03')"
+                        class="raw-toggle">
+                        Show Raw
+                    </button>
+                </summary>
+                <div class="doc-card-body">
+                    <div id="enhanced-section-03" class="enhanced-view">
+                        <p>
+                            Initial plan listing books and courses
+                            <span class="ai-refined" title="was: remeber"
+                                >remembered</span
+                            >
+                            for now.
+                        </p>
+
+                        <h5>Resources & Courses</h5>
+                        <div class="d-grid gap-2">
+                            <a
+                                href="https://adventofagents.com/"
+                                class="resource-link"
+                                target="_blank">
+                                🔗 Advent of Agents
+                            </a>
+                            <a
+                                href="https://www.freecodecamp.org/news/how-to-build-a-real-time-ai-gym-coach-with-vision-agents/"
+                                class="resource-link"
+                                target="_blank">
+                                🔗 Build a Real-Time AI Gym Coach with Vision
+                                Agents (FreeCodeCamp)
+                            </a>
+                            <a
+                                href="https://academy.manus.im"
+                                class="resource-link"
+                                target="_blank">
+                                🔗 Manus Academy
+                            </a>
+                            <a
+                                href="https://learn.deeplearning.ai/"
+                                class="resource-link"
+                                target="_blank">
+                                🔗 DeepLearning.AI
+                            </a>
+                            <a
+                                href="https://downloadly.ir/elearning/video-tutorials/become-an-llm-agentic-ai-engineer-14-day-bootcamp/"
+                                class="resource-link"
+                                target="_blank">
+                                🔗 LLM Agentic AI Engineer Bootcamp (Downloadly)
+                            </a>
+                        </div>
+
+                        <div class="mt-3">
+                            <strong>Next Steps:</strong>
+                            <ul>
+                                <li>
+                                    Collect links from Udemy courses (no links
+                                    yet).
+                                </li>
+                                <li>
+                                    Make a plan to organize all links in one
+                                    place.
+                                </li>
+                                <li>
+                                    Review "AI" folder contents (files and
+                                    books) and decide priority.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div
+                        id="raw-section-03"
+                        class="raw-view"
+                        style="display: none">
+                        this file i will put things like books and courses about
+                        the AI learning plan , it is initial plan with listing
+                        of things that I remeber for now , but dont know if i am
+                        missing something : https://adventofagents.com/
+                        https://www.freecodecamp.org/news/how-to-build-a-real-time-ai-gym-coach-with-vision-agents/
+                        https://academy.manus.im https://learn.deeplearning.ai/
+                        https://downloadly.ir/elearning/video-tutorials/become-an-llm-agentic-ai-engineer-14-day-bootcamp/
+                        Those sites have courses and paths ,I also have some
+                        udemy courses but no links yet , so I need to make a
+                        plan to collect those links in one place then order them
+                        I made a folder named AI with some files and books , but
+                        didnt decide which to use or read first
+                    </div>
+                </div>
+            </details>
+
+            <!-- Section 04: Flutter -->
+            <details class="doc-card" id="section-04" open>
+                <summary class="doc-card-header">
+                    <div class="header-content">
+                        <span class="section-id">#section-04</span>
+                        <span class="fw-bold">Flutter Development</span>
+                    </div>
+                    <button
+                        onclick="toggleView(event, 'section-04')"
+                        class="raw-toggle">
+                        Show Raw
+                    </button>
+                </summary>
+                <div class="doc-card-body">
+                    <div id="enhanced-section-04" class="enhanced-view">
+                        <h5>Learning Path</h5>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                Start with <strong>Tadas Petra</strong> course.
+                            </div>
+                            <div class="timeline-item">
+                                Then <strong>Angela</strong> course.
+                            </div>
+                            <div class="timeline-item">
+                                Learn <strong>BLoC</strong> for state
+                                management.
+                            </div>
+                            <div class="timeline-item">
+                                Cleanup: Delete redundant courses/books and keep
+                                only
+                                <span class="ai-refined" title="was: usefull"
+                                    >useful</span
+                                >
+                                ones.
+                            </div>
+                        </div>
+
+                        <h5>Goals</h5>
+                        <ul>
+                            <li>
+                                Start
+                                <span class="ai-refined" title="was: launchung"
+                                    >launching</span
+                                >
+                                MVP for Daily Gear app and other projects.
+                            </li>
+                            <li>
+                                Learn fast: NTI
+                                <span class="ai-refined" title="was: coatching"
+                                    >coaching</span
+                                >
+                                requires making a gig (freelance), so the MVP
+                                will be this gig.
+                            </li>
+                        </ul>
+                    </div>
+                    <div
+                        id="raw-section-04"
+                        class="raw-view"
+                        style="display: none">
+                        I have a folder of books and a Folder of courses , there
+                        are lots of content but i will start with tadas pertra
+                        course first, then angela , if ok I will start learning
+                        bloc for state management , then maybe later delete
+                        redundant courses and books and keep the usefull only I
+                        need to learn flutter first so i start launchung MVP for
+                        the daily gear app and also to make MVP for other
+                        projects i also need to learn flutter fast ,the NTI
+                        coatching need me to make a gig as a freelance so I want
+                        to make this MVP as my gig
+                    </div>
+                </div>
+            </details>
+
+            <!-- Section 08: Topics -->
+            <details class="doc-card" id="section-08" open>
+                <summary class="doc-card-header">
+                    <div class="header-content">
+                        <span class="section-id">#section-08</span>
+                        <span class="fw-bold">Topics to Learn</span>
+                    </div>
+                    <button
+                        onclick="toggleView(event, 'section-08')"
+                        class="raw-toggle">
+                        Show Raw
+                    </button>
+                </summary>
+                <div class="doc-card-body">
+                    <div id="enhanced-section-08" class="enhanced-view">
+                        <p>
+                            There are named topics in the "topics" folder that
+                            need to be studied (daily or weekly).
+                        </p>
+                        <div class="alert alert-warning">
+                            <strong>Correction Needed:</strong>
+                            <ul class="mb-0">
+                                <li>Some topics are duplicated.</li>
+                                <li>
+                                    Some need to be prioritized (prerequisites).
+                                </li>
+                                <li>
+                                    Some are generic and need splitting into
+                                    more specific items.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div
+                        id="raw-section-08"
+                        class="raw-view"
+                        style="display: none">
+                        There are some named topics in general that I want to
+                        pick each of them one by one , maybe every day or week
+                        to study them ,, they are in a list inside "topics"
+                        folder but some topics are duplicated , some need to be
+                        learned first , and some topics are generic and need
+                        more splitting
+                    </div>
+                </div>
+            </details>
+
+            <!-- Section 07: Software Books -->
+            <details class="doc-card" id="section-07" open>
+                <summary class="doc-card-header">
+                    <div class="header-content">
+                        <span class="section-id">#section-07</span>
+                        <span class="fw-bold">Reading List (Software)</span>
+                    </div>
+                    <button
+                        onclick="toggleView(event, 'section-07')"
+                        class="raw-toggle">
+                        Show Raw
+                    </button>
+                </summary>
+                <div class="doc-card-body">
+                    <div id="enhanced-section-07" class="enhanced-view">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th style="width: 50px">#</th>
+                                    <th>Book / Topic Scope</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>
+                                        The core software development process
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Distributed systems</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>
+                                        Practices to write easy-to-understand
+                                        code and refactor
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Managing large-scale projects</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>
+                                        Techniques to restructure code to
+                                        enhance its maintainability
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>Techniques to refactor legacy code</td>
+                                </tr>
+                                <tr>
+                                    <td>7</td>
+                                    <td>
+                                        Making better architectural decisions
+                                        with tradeoffs
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>8</td>
+                                    <td>
+                                        How databases work: storage engines and
+                                        distributed systems
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>9</td>
+                                    <td>
+                                        Growing as a tech leader without
+                                        becoming a manager
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>10</td>
+                                    <td>
+                                        Leading and building high-performance
+                                        teams
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>11</td>
+                                    <td>Writing clean and maintainable code</td>
+                                </tr>
+                                <tr>
+                                    <td>12</td>
+                                    <td>Systematic debugging</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div
+                        id="raw-section-07"
+                        class="raw-view"
+                        style="display: none">
+                        This is reading list for books : 1. The core software
+                        development process 2. Distributed systems 3. Practices
+                        to write easy-to-understand code and refactor 4.
+                        Managing large-scale projects 5. Techniques to
+                        restructure code to enhance its maintainability 6.
+                        Techniques to refactor legacy code 7. Making better
+                        architectural decisions with tradeoffs 8. How databases
+                        work: storage engines and distributed systems 9. Growing
+                        as a tech leader without becoming a manager 10. Leading
+                        and building high-performance teams 11. Writing clean
+                        and maintainable code 12. Systematic debugging
+                    </div>
+                </div>
+            </details>
+
+            <!-- Section 09: English -->
+            <details class="doc-card" id="section-09" open>
+                <summary class="doc-card-header">
+                    <div class="header-content">
+                        <span class="section-id">#section-09</span>
+                        <span class="fw-bold">English Enhancement</span>
+                    </div>
+                    <button
+                        onclick="toggleView(event, 'section-09')"
+                        class="raw-toggle">
+                        Show Raw
+                    </button>
+                </summary>
+                <div class="doc-card-body">
+                    <div id="enhanced-section-09" class="enhanced-view">
+                        <p>
+                            <strong>Focus:</strong> PTE English Test and
+                            Learning.
+                        </p>
+                        <p>
+                            <strong>Status:</strong> Currently an "in the mind"
+                            plan, no concrete steps yet.
+                        </p>
+                        <p>
+                            <strong>Next Action:</strong> Search and collect
+                            existing resources, then order them.
+                        </p>
+                    </div>
+                    <div
+                        id="raw-section-09"
+                        class="raw-view"
+                        style="display: none">
+                        One of the plans in enhance English PTE english test and
+                        learning I the first step that I need is searching and
+                        collecting the resounce I already have then order them
+                        till now it is [in the mind] plan , but no steps
+                    </div>
+                </div>
+            </details>
+
+            <!-- Section 10: Russian -->
+            <details class="doc-card" id="section-10" open>
+                <summary class="doc-card-header">
+                    <div class="header-content">
+                        <span class="section-id">#section-10</span>
+                        <span class="fw-bold">Russian Learning</span>
+                    </div>
+                    <button
+                        onclick="toggleView(event, 'section-10')"
+                        class="raw-toggle">
+                        Show Raw
+                    </button>
+                </summary>
+                <div class="doc-card-body">
+                    <div id="enhanced-section-10" class="enhanced-view">
+                        <p>
+                            Plan to start with the following course (using its
+                            lessons as steps):
+                        </p>
+                        <a
+                            href="https://downloadly.ir/elearning/video-tutorials/complete-russian-course-learn-russian-for-beginners/"
+                            class="resource-link"
+                            target="_blank">
+                            🔗 Complete Russian Course for Beginners
+                            (Downloadly)
+                        </a>
+                    </div>
+                    <div
+                        id="raw-section-10"
+                        class="raw-view"
+                        style="display: none">
+                        I have some books and files but want to start with this
+                        https://downloadly.ir/elearning/video-tutorials/complete-russian-course-learn-russian-for-beginners/
+                        so I need to get it and make a plan [ the steps are its
+                        lessons ]
+                    </div>
+                </div>
+            </details>
+
+            <!-- Section 11: Digital Declutter -->
+            <details class="doc-card" id="section-11" open>
+                <summary class="doc-card-header">
+                    <div class="header-content">
+                        <span class="section-id">#section-11</span>
+                        <span class="fw-bold">Digital Declutter & Misc</span>
+                    </div>
+                    <button
+                        onclick="toggleView(event, 'section-11')"
+                        class="raw-toggle">
+                        Show Raw
+                    </button>
+                </summary>
+                <div class="doc-card-body">
+                    <div id="enhanced-section-11" class="enhanced-view">
+                        <h5>Categories</h5>
+                        <ul>
+                            <li>
+                                <span dir="rtl" lang="ar"
+                                    >أهداف حياتية / أهداف الشغل / أهداف
+                                    الثقافة</span
+                                >
+                                (Life Goals / Work Goals / Culture Goals)
+                            </li>
+                            <li>
+                                <span dir="rtl" lang="ar"
+                                    >فيه كتب ثقافة عامة محتاج أقرأها</span
+                                >
+                                (General culture books I need to read)
+                            </li>
+                        </ul>
+
+                        <hr />
+
+                        <h5>Declutter Targets</h5>
+                        <div class="d-flex flex-wrap gap-2 mb-3">
+                            <span class="badge bg-secondary">YouTube</span>
+                            <span class="badge bg-secondary"
+                                >Google Photos</span
+                            >
+                            <span class="badge bg-secondary">Drive</span>
+                            <span class="badge bg-secondary">Hard Drives</span>
+                            <span class="badge bg-secondary"
+                                >Photos & Files</span
+                            >
+                            <span class="badge bg-secondary">Contacts</span>
+                            <span class="badge bg-secondary">Telegram</span>
+                            <span class="badge bg-secondary">LinkedIn</span>
+                        </div>
+
+                        <div class="alert alert-light border">
+                            <span
+                                class="ai-refined"
+                                title="was: no habit... yet but need to put them in consideration"
+                                >No concrete plan yet, but implies a need to
+                                clear/delete unnecessary digital files.</span
+                            >
+                        </div>
+                    </div>
+                    <div
+                        id="raw-section-11"
+                        class="raw-view"
+                        style="display: none">
+                        أهداف حياتية / أهداف الشغل / أهداف الثقافة فيه كتب ثقافة
+                        عامة محتاج أقرأها يوتيوب / جوجل فوتوز / درايف / الهاردات
+                        / الصور والملفات / contacts / تلجرام واللينكد إن احذف كل
+                        ما لا ضرورة له. no plan from my side , no habit to
+                        reduce them yet but need to put them in consideration
+                        need to clear and declutter my digital files on telegram
+                        and drive and others
+                    </div>
+                </div>
+            </details>
+
+            <!-- Section 13: Assets -->
+            <details class="doc-card" id="section-13" open>
+                <summary class="doc-card-header">
+                    <div class="header-content">
+                        <span class="section-id">#section-13</span>
+                        <span class="fw-bold">Assets & Attachments</span>
+                    </div>
+                    <button
+                        onclick="toggleView(event, 'section-13')"
+                        class="raw-toggle">
+                        Show Raw
+                    </button>
+                </summary>
+                <div class="doc-card-body">
+                    <div id="enhanced-section-13" class="enhanced-view">
+                        <div class="row row-cols-1 row-cols-md-2 g-3">
+                            <div class="col">
+                                <div class="card h-100 p-3 bg-light border-0">
+                                    <h6>📄 Plans & JSONs</h6>
+                                    <ul class="list-unstyled mb-0 small">
+                                        <li>
+                                            <a
+                                                href="assets/Learning TOPICS and PATHs.json"
+                                                >Learning TOPICS and
+                                                PATHs.json</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                href="assets/PLANFinalizing and Finishing Dgear Project.json"
+                                                >PLANFinalizing and Finishing
+                                                Dgear Project.json</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                href="assets/ai_engineering_path.json"
+                                                >ai_engineering_path.json</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                href="assets/career_upgrade_plan.json"
+                                                >career_upgrade_plan.json</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                href="assets/culture_books_plan.json"
+                                                >culture_books_plan.json</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                href="assets/daily_gear_launch.json"
+                                                >daily_gear_launch.json</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                href="assets/digital_declutter.json"
+                                                >digital_declutter.json</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                href="assets/ecommerce_setup.json"
+                                                >ecommerce_setup.json</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                href="assets/flutter_learning_path.json"
+                                                >flutter_learning_path.json</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                href="assets/meta_planning_list.json"
+                                                >meta_planning_list.json</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                href="assets/software_reading_list.json"
+                                                >software_reading_list.json</a
+                                            >
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card h-100 p-3 bg-light border-0">
+                                    <h6>📂 PHP Sprints</h6>
+                                    <ul class="list-unstyled mb-0 small">
+                                        <li>
+                                            <a
+                                                href="assets/php/Senior Backend Developer Exhaustive Atomic Action Plan.json"
+                                                >Senior Backend Dev Plan.json</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                href="assets/php/Sprint_01_Foundations.json"
+                                                >Sprint_01_Foundations.json</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                href="assets/php/Sprint_02_OOP_Mastery.json"
+                                                >Sprint_02_OOP_Mastery.json</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                href="assets/php/Sprint_03_Laravel_Core.json"
+                                                >Sprint_03_Laravel_Core.json</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                href="assets/php/Sprint_04_Routing_Controllers.json"
+                                                >Sprint_04_Routing_Controllers.json</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                href="assets/php/Sprint_05_Database_Eloquent.json"
+                                                >Sprint_05_Database_Eloquent.json</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                href="assets/php/Sprint_06_Advanced_DB.json"
+                                                >Sprint_06_Advanced_DB.json</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                href="assets/php/Sprint_07_API_Dev.json"
+                                                >Sprint_07_API_Dev.json</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                href="assets/php/Sprint_08_Async_Queues.json"
+                                                >Sprint_08_Async_Queues.json</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                href="assets/php/Sprint_09_Testing_DevOps.json"
+                                                >Sprint_09_Testing_DevOps.json</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                href="assets/php/Sprint_10_Scaling_Architecture.json"
+                                                >Sprint_10_Scaling_Architecture.json</a
+                                            >
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        id="raw-section-13"
+                        class="raw-view"
+                        style="display: none">
+                        (Assets list was formatted for readability)
+                    </div>
+                </div>
+            </details>
+        </main>
+
+        <script>
+            function toggleView(event, sectionId) {
+                event.preventDefault();
+                const raw = document.getElementById("raw-" + sectionId);
+                const enhanced = document.getElementById(
+                    "enhanced-" + sectionId
+                );
+                const button = event.target;
+
+                if (raw.style.display === "none") {
+                    raw.style.display = "block";
+                    enhanced.style.display = "none";
+                    button.textContent = "Show Enhanced";
+                    button.style.backgroundColor = "#e9ecef";
+                } else {
+                    raw.style.display = "none";
+                    enhanced.style.display = "block";
+                    button.textContent = "Show Raw";
+                    button.style.backgroundColor = "white";
+                }
+            }
+
+            // Highlight active sidebar link on scroll
+            window.addEventListener("scroll", () => {
+                const sections = document.querySelectorAll("details.doc-card");
+                let current = "";
+
+                sections.forEach((section) => {
+                    const sectionTop = section.offsetTop;
+                    if (scrollY >= sectionTop - 150) {
+                        current = section.getAttribute("id");
+                    }
+                });
+
+                document.querySelectorAll("#sidebar a").forEach((a) => {
+                    a.classList.remove("active");
+                    if (
+                        a.getAttribute("href").includes(current) &&
+                        current !== ""
+                    ) {
+                        a.classList.add("active");
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

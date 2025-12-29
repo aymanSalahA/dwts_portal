@@ -1,0 +1,21 @@
+{
+    "title": "Sprint 08: Async, Queues & Integration",
+    "description": "Decoupling logic, handling background jobs, and integrating external services.",
+    "items": [
+        "01- Event Driven Architecture: Decoupling logic, Dispatching events, Listeners",
+        "02- Listeners & Subscribers: Handling events sync vs queued, Event discovery",
+        "03- Queue System: Drivers (Redis/SQS/DB), Job class structure, dispatch()",
+        "04- Job Dispatching: dispatch(), delay(), chaining, batches, closures",
+        "05- Queue Workers: worker process service, timeout, memory limits, restarting",
+        "06- Horizon: Dashboard configuration, balancing strategies, metrics monitoring",
+        "07- Failed Jobs: Handling failures, retries, backoff strategies, UUIDs, table pruning",
+        "08- Scheduler: Cron setup, defining schedules, overlaps, onOneServer, maintenance",
+        "09- Notifications: Channels (Mail, DB, SMS, Slack), on-demand notifs",
+        "10- Mail System: Mailables, Markdown templates, attachments, queuing mail",
+        "11- Redis: Caching, Pub/Sub, pipelining, atomic locks usage for concurrency",
+        "12- Webhooks: Handling incoming hooks, signature verification, response requirements",
+        "13- Server-Sent Events / Websockets: Broadcasting overview, Reverb/Pusher basics",
+        "14- File Storage: S3 integration, local vs cloud disks, file visibility, streaming",
+        "15- Payment Integration Logic: Idempotency keys, webhook reconciliation patterns"
+    ]
+}

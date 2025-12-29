@@ -1,0 +1,12 @@
+{
+    "title": "Daily Gear Launch Plan",
+    "description": "Steps to finalize and launch Daily Gear.",
+    "items": [
+        "01- Review 'PLANFinalizing...json' for all pending tasks",
+        "02- Fix priority web bugs from the JSON list",
+        "03- Learn basic Flutter for Mobile MVP",
+        "04- Develop Mobile MVP (Today's tasks offline + Sync)",
+        "05- Launch Web v1.0",
+        "06- Launch Mobile v1.0"
+    ]
+}

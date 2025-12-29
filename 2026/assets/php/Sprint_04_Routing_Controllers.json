@@ -1,0 +1,21 @@
+{
+    "title": "Sprint 04: Routing, Controllers & Validation",
+    "description": "Mastering the request handling layer, enforcing rules, and managing flow.",
+    "items": [
+        "01- Router Verbs: GET/POST/PUT/PATCH/DELETE nuances, spoofing form methods",
+        "02- Route Parameters: Wildcards, Regex constraints, Optional params, Dependency injection",
+        "03- Route Model Binding: Implicit logic, scoping, customizing resolution keys, Missing handlers",
+        "04- Route Grouping: Prefixes, Middleware groups, Subdomain routing, Controller grouping",
+        "05- Named Routes & URL Gen: route() helper, Signed URLs, Temporary URLs for security",
+        "06- Middleware: Creating middleware, terminable middleware, passing parameters",
+        "07- Rate Limiting: RateLimiter facade, per-route limits, Redis backing, Dynamic limits",
+        "08- Controller Theory: Skinny controllers, Resource controllers, Invokable controllers",
+        "09- Validation Rules: FormRequest classes, authorize(), available rules breakdown",
+        "10- Custom Validation: Rule objects, Closures, After validation hooks, Error messages",
+        "11- Sanitization: Input trimming, strip_tags, casting input data, array filters",
+        "12- Session Handling: Drivers (File/Redis), Flash data, putting/pulling session state",
+        "13- Cookie mechanics: Encryption, queueing cookies, response attachment, serialization",
+        "14- CSRF Protection: VerifyCsrfToken, X-CSRF-TOKEN headers, excluding routes",
+        "15- Localization: Language files, __() helper, URL-based locale switching basics"
+    ]
+}

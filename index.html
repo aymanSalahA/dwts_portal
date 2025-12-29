@@ -1,72 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>DWT-S Portal</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DWT-S Portal</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+    <body>
+        <main>
+            <section class="intro-section">
+                <h2>DWT-s Portal</h2>
+                <p>Manage projects, plans, and progress all in one place</p>
+            </section>
 
-<body>
+            <div class="search-container">
+                <input
+                    type="text"
+                    id="search-input"
+                    class="search-input"
+                    placeholder="Search cards..."
+                    aria-label="Search cards" />
+            </div>
 
-    <main>
-        <section class="intro-section">
-            <h2>DWT-s Portal</h2>
-            <p>Manage projects, plans, and progress all in one place</p>
-        </section>
+            <div class="grid" id="card-grid">
+                <!-- GRID_START -->
 
-        <div class="search-container">
-            <input type="text" id="search-input" class="search-input" placeholder="Search cards..."
-                aria-label="Search cards" />
-        </div>
-
-        <div class="grid" id="card-grid">
-            <!-- GRID_START -->
-
-            <!-- <div class="card">
-                <div class="card-header">
-                    <div class="card-title" title="20226 plan">20226 Plan</div>
-                    <span class="card-badge">Active</span>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title" title="2026">2026</div>
+                        <span class="card-badge">Active</span>
+                    </div>
+                    <div class="card-content">
+                        <p class="card-description">2026 Initial plan</p>
+                    </div>
+                    <div class="links">
+                        <a
+                            href="./2026/phase_01.html"
+                            class="link-btn phase-01"
+                            target="_blank"
+                            >Phase 1</a
+                        >
+                        <a
+                            href="./2026/phase_02.html"
+                            class="link-btn phase-02"
+                            target="_blank"
+                            >Phase 2</a
+                        >
+                        <a
+                            href="./2026/phase_03.html"
+                            class="link-btn phase-03"
+                            target="_blank"
+                            >Phase 3</a
+                        >
+                    </div>
                 </div>
-                <div class="card-content">
-                    <p class="card-description">Strategic planning for 2022-2026 with three major phases</p>
-                </div>
-                <div class="links">
-                    <a href="./20226 plan/phase_01.html" class="link-btn phase-01" target="_blank">Phase 1</a>
-                    <a href="./20226 plan/phase_02.html" class="link-btn phase-02" target="_blank">Phase 2</a>
-                    <a href="./20226 plan/phase_03.html" class="link-btn phase-03" target="_blank">Phase 3</a>
-                </div>
-            </div> -->
 
-            <!-- GRID_END -->
-        </div>
-    </main>
+                <!-- GRID_END -->
+            </div>
+        </main>
 
-    <footer>
-        &copy; DWTS System.
-    </footer>
+        <footer>&copy; DWTS System.</footer>
 
-    <script>
-        // Search and filter functionality
-        const searchInput = document.getElementById('search-input');
-        const cardGrid = document.getElementById('card-grid');
-        const cards = cardGrid.querySelectorAll('.card');
+        <script>
+            // Search and filter functionality
+            const searchInput = document.getElementById("search-input");
+            const cardGrid = document.getElementById("card-grid");
+            const cards = cardGrid.querySelectorAll(".card");
 
-        searchInput.addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase();
+            searchInput.addEventListener("input", (e) => {
+                const searchTerm = e.target.value.toLowerCase();
 
-            cards.forEach((card) => {
-                const title = card.querySelector('.card-title')?.textContent?.toLowerCase() || '';
-                const description = card.querySelector('.card-description')?.textContent?.toLowerCase() || '';
-                const badge = card.querySelector('.card-badge')?.textContent?.toLowerCase() || '';
+                cards.forEach((card) => {
+                    const title =
+                        card
+                            .querySelector(".card-title")
+                            ?.textContent?.toLowerCase() || "";
+                    const description =
+                        card
+                            .querySelector(".card-description")
+                            ?.textContent?.toLowerCase() || "";
+                    const badge =
+                        card
+                            .querySelector(".card-badge")
+                            ?.textContent?.toLowerCase() || "";
 
-                const matches = title.includes(searchTerm) || description.includes(searchTerm) || badge.includes(searchTerm);
+                    const matches =
+                        title.includes(searchTerm) ||
+                        description.includes(searchTerm) ||
+                        badge.includes(searchTerm);
 
-                card.style.display = matches ? '' : 'none';
+                    card.style.display = matches ? "" : "none";
+                });
             });
-        });
-    </script>
-</body>
-
+        </script>
+    </body>
 </html>

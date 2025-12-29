@@ -1,0 +1,11 @@
+{
+    "title": "Flutter Learning Path",
+    "description": "Focused plan to learn Flutter for Daily Gear MVP.",
+    "items": [
+        "01- Start Tadas Petra course (focus on basics)",
+        "02- Watch Angela Yu course (projects focus)",
+        "03- Learn State Management (BLoC) basics",
+        "04- Build Daily Gear MVP interface",
+        "05- Implement Offline/Sync logic"
+    ]
+}

@@ -1,0 +1,21 @@
+{
+    "title": "Sprint 09: Testing, DevOps & Quality",
+    "description": "Ensuring stability, automated testing, and professional deployment standards.",
+    "items": [
+        "01- Test Driven Development: The Red-Green-Refactor cycle concept and benefits",
+        "02- PHPUnit Configuration: xml settings, env vars, test suites, coverage reports",
+        "03- Feature Testing: HTTP assertions, actingAs user, session state, JSON testing",
+        "04- Unit Testing: Testing isolated classes, services, logic without app boot",
+        "05- Mocking: Mockery, spy(), shouldReceive(), partial mocks, construction injection",
+        "06- Facade Mocking: Storage::fake(), Bus::fake(), Event::fake(), Http::fake()",
+        "07- Static Analysis: PHPStan/Larastan configuration, levels, typing coverage",
+        "08- CI/CD Pipelines: GitHub Actions steps (test -> build -> deploy), caching deps",
+        "09- Docker Environment: Dockerfile, docker-compose for dev vs prod (Sail vs Custom)",
+        "10- Linux Fundamentals: Permissions, Nginx config, PHP-FPM pool config, Systemd",
+        "11- Deployment Strategies: Blue/Green, Rolling updates, Maintenance mode",
+        "12- Zero Downtime: Atomic deployments, symlink swapping, deploy scripts",
+        "13- Server Provisioning: Basic VPS setup, firewall (UFW), SSH keys management",
+        "14- Coding Standards: Laravel Pint, ECS, Git hooks (Husky) for formatting",
+        "15- Code Review: Reviewer checklist, automated PR comments, conventional commits"
+    ]
+}

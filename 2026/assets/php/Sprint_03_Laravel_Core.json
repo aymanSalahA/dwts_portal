@@ -1,0 +1,21 @@
+{
+    "title": "Sprint 03: Laravel Core Architecture",
+    "description": "Understanding the 'Magic' and internal lifecycle of the framework to master the tool.",
+    "items": [
+        "01- PSR Standards: PSR-4 Autoloading vs Classmap, PSR-12 Coding Style, Composer internals",
+        "02- Laravel Lifecycle: public/index.php entry point, bootstrapping, termination info",
+        "03- The HTTP Kernel: Request capturing, Middleware stacks, Kernel handling flow",
+        "04- Service Container I: The IOC concept, bind(), singleton(), make(), resolving dependencies",
+        "05- Service Container II: Contextual binding, Tagging services, Interface binding",
+        "06- Facades: How they work (__callStatic), Real-time facades, Pros/Cons, Mockability",
+        "07- Service Providers: register() vs boot() phases, Deferrable providers optimization",
+        "08- Request Logic: Input handling, Header inspection, Boolean checks, Content negotiation",
+        "09- Response Factory: JSON responses, Downloads, File serving, Headers control, Macros",
+        "10- Configuration: .env files, Config caching, cascading config arrays, repository pattern",
+        "11- Directory Structure: Logic placement (Controllers vs Jobs vs Services vs Actions)",
+        "12- Artisan Console: Custom commands, I/O interaction, Signatures, Progress bars",
+        "13- Frontend Assets: Vite integration basics, mix() legacy, asset() helpers",
+        "14- Exception Handling: Handler class, custom render methods, reporting logic",
+        "15- Logging System: Monolog channels, Log levels, Contextual logging, Stack drivers"
+    ]
+}

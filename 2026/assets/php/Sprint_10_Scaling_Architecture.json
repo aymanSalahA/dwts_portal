@@ -1,0 +1,21 @@
+{
+    "title": "Sprint 10: Scaling, Architecture & Leadership",
+    "description": "Strategies for high-scale applications, design patterns, and technical leadership.",
+    "items": [
+        "01- Caching Strategies: Cache tags, Cache-Aside pattern, Stampede protection",
+        "02- Distributed Locking: Atomic locks for concurrency control in distributed systems",
+        "03- Design Patterns I: Repository Pattern (When & Why), Decorator Pattern",
+        "04- Design Patterns II: Strategy Pattern, Factory Pattern implementation in Laravel",
+        "05- DTOs: Data Transfer Objects for strict data passing between layers",
+        "06- Load Testing: k6/JMeter basics, identifying bottlenecks, stress testing",
+        "07- Security Hardening: XSS, SQLi (solved by ORM), Clickjacking headers, HSTS",
+        "08- GDPR & Privacy: Right to assume, Anonymization, Data export, Encryption at rest",
+        "09- Backup & Recovery: Automating dumps, Point-In-Time recovery, Disaster plans",
+        "10- Logging at Scale: ELK stack basics, structured JSON logging, correlation IDs",
+        "11- Health Checks: Probes for k8s/load balancers, endpoint monitoring",
+        "12- Tech Leadership: Mentoring, architectural decision records (ADR), tradeoffs",
+        "13- Documentation Culture: Keeping docs close to code, living docs, diagrams",
+        "14- Compliance: Audit logs, activity tracking models, legal constraints",
+        "15- Legacy Code: Strangler fig pattern, refactoring strategies, incremental upgrades"
+    ]
+}

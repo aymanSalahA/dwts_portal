@@ -1,0 +1,21 @@
+{
+    "title": "Sprint 05: Database & Eloquent Foundation",
+    "description": "Standardizing data access, schema management, and ORM mastery.",
+    "items": [
+        "01- Database Migrations: Creating tables, modifiers, indexes, foreign keys, rolling back",
+        "02- Seeding & Factories: Model factories, legacy factories, states, sequences, seeding flow",
+        "03- Query Builder: DB facade, selects, joins, unions, having, raw expressions (DB::raw)",
+        "04- Eloquent Models: Active Record pattern, table mapping, primary keys, timestamps",
+        "05- Model Attributes: $fillable/$guarded security, $casts (JSON/Date/Boolean), defaults",
+        "06- Basic Relationships: hasOne, belongsTo, hasMany (One-to-One, One-to-Many)",
+        "07- Advanced Relationships: belongsToMany (Pivot tables), hasOneThrough, hasManyThrough",
+        "08- Polymorphic Relationships: morphOne, morphMany, morphTo structure, One-of-Many",
+        "09- Eager Loading: N+1 problem, with(), lazy eager loading (load()), counting related",
+        "10- Accessors & Mutators: get/setAttribute mechanics, Attribute class (PHP 8.1)",
+        "11- Soft Deletes: Trait usage, restoring, force deleting, querying trashed items",
+        "12- Eloquent Events: creating, updated, deleting hooks, Observer classes setup",
+        "13- Global Scopes: Writing and applying global query constraints (e.g. Multi-tenancy)",
+        "14- Local Scopes: Reusable query logic (scopeActive), dynamic scopes parameters",
+        "15- Collections: The Collection class power, transforming model results, Higher order msg"
+    ]
+}

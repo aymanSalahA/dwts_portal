@@ -1,0 +1,21 @@
+{
+    "title": "Sprint 02: Object-Oriented Mastery",
+    "description": "Deep dive into PHP's OOP features, from structure to advanced design principles including SOLID.",
+    "items": [
+        "01- Class Anatomy: Readonly classes, New instance syntax, Constructor property promotion",
+        "02- Visibility & Encapsulation: public/protected/private impact, Typed properties, Uninitialized state",
+        "03- Magic Methods: __get/__set, __call/__callStatic, __invoke, __toString, __debugInfo",
+        "04- Inheritance Dynamics: Abstract classes vs Interfaces, final keyword, 'extends' best practices",
+        "05- Interfaces & Polymorphism: Contract-based programming, Type hinting interfaces over classes",
+        "06- Traits: Horizontal code reuse, Conflict resolution (insteadof, as), Composition over inheritance",
+        "07- Enums: Unit Enums, Backed Enums, Enum methods and interfaces (PHP 8.1+)",
+        "08- Attributes: Native PHP Attributes syntax (#[Attr]), Reflection access basics",
+        "09- Static & Constants: Late Static Binding (static:: vs self::), Class constants visibility",
+        "10- Anonymous Classes: Usage in testing, one-off objects, and dynamic implementations",
+        "11- Dependency Injection: Constructor injection, Setter injection concepts, Inversion of Control",
+        "12- SOLID - SRP: Single Responsibility Principle - Extracting logic to specialized classes",
+        "13- SOLID - OCP: Open/Closed Principle - Designing for extension without modification",
+        "14- SOLID - LSP & ISP: Liskov Substitution & Interface Segregation Principles",
+        "15- SOLID - DIP: Dependency Inversion - Programming to abstractions/interfaces"
+    ]
+}

@@ -1,0 +1,21 @@
+{
+    "title": "Sprint 06: Advanced Database & Performance",
+    "description": "Optimizing data interaction, handling complexity, and ensuring performance at scale.",
+    "items": [
+        "01- Database Transactions: DB::transaction(), manual begin/commit, Deadlocks, Retries",
+        "02- Advanced Indexing: Composite indexes, unique constraints, fulltext, covering indexes",
+        "03- Query Performance: EXPLAIN statements, identifying slow queries, avoiding SELECT *",
+        "04- Raw SQL: When to drop to raw, DB::raw() safety, parameter bindings to prevent SQLi",
+        "05- Large Datasets: chunk(), chunkById(), cursor() for memory efficient processing",
+        "06- Pruning: Prunable models, mass pruning old data automated strategies",
+        "07- Caching Queries: Remember() pattern, caching repository decorators",
+        "08- Read/Write Splitting: Configuring read replicas in database.php, sticky connections",
+        "09- Subqueries: addSelect subqueries, whereIn subqueries, ordering by subquery",
+        "10- JSON Columns: Querying JSON data, indexing JSON paths (MySQL/PG differences)",
+        "11- Cross-Database Relationships: Connecting models across DB connections (federated)",
+        "12- Hardware/Drivers: MySQL vs PostgreSQL nuances, pdo configuration optimizations",
+        "13- Eloquent Strictness: preventLazyLoading(), preventSilentlyDiscardingAttributes()",
+        "14- Database Testing: RefreshDatabase, Model factories, Asserting database state",
+        "15- Monitoring: DB::listen() for query inspection, Telescope watcher for queries"
+    ]
+}

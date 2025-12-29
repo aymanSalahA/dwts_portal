@@ -1,0 +1,21 @@
+{
+    "title": "Sprint 01: PHP Foundations & Flow",
+    "description": "Granular refresh of PHP's building blocks, focusing on memory model, type system nuances, and functional paradigms for seniors.",
+    "items": [
+        "01- Variable Scopes & References: Local, Global, Static internals, Memory assignment vs Value assignment (&$var)",
+        "02- Primitive Types & Math: Integer overflow, Float precision (BCMath), Strings, Unicode handling",
+        "03- Type System: Strict Types (declare(strict_types=1)), Casting, Type Juggling implications",
+        "04- Null Handling: Coalescing (??), Null Safe (?->), isset vs empty vs is_null distinctions",
+        "05- Constants & Superglobals: const vs define(), Magic constants (__DIR__), Safe usage of $_SERVER/$_ENV",
+        "06- Control Structures: Match expression vs Switch (Strictness), Generators (yield), loops optimization",
+        "07- Function Power: Named Arguments, Variadics (...$args), Default values, Argument unpacking",
+        "08- Modern Return Types: Union Types (A|B), Intersection Types (A&B), void, never (PHP 8.1)",
+        "09- Anonymous Functions: Closures, 'use' keyword, Arrow Functions (fn) scope capturing",
+        "10- Array Architectures: Associative vs Indexed performance, Destructuring (list/[]), Spread operator",
+        "11- Functional Array Methods: Deep dive into array_map, array_filter, array_reduce usage",
+        "12- Application Sorting: User-defined sorts (usort), Spaceship operator (<=>) for comparisons",
+        "13- SPL Data Structures: SplFixedArray, SplQueue, SplStack for performance optimization",
+        "14- File Inclusion: Autoloading mechanics (pre-Composer), include vs require safety macros",
+        "15- Garbage Collection: Basics of reference counting, cyclic references, and memory management"
+    ]
+}

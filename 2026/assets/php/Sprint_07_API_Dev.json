@@ -1,0 +1,21 @@
+{
+    "title": "Sprint 07: API Development Principles",
+    "description": "Building robust, standard-compliant APIs with secure authentication.",
+    "items": [
+        "01- REST Architecture: Resources, Representations, Clean URLs, HATEOAS basics",
+        "02- HTTP Status Codes: Semantics of 200, 201, 204, 400, 401, 403, 422, 500 family",
+        "03- API Resources: Transformation layers, JsonResource, resource collections, conditional data",
+        "04- API Versioning: URL versioning vs Header versioning strategies, deprecation",
+        "05- API Authentication: Sanctum (Stateful vs Tokens), Abilities, SPA auth flow",
+        "06- JWT Implementation: Understanding tokens, claims, signing, headers structure",
+        "07- OAuth2 Basics: Passport, Client Credentials Grant (M2M), Password Grant flows",
+        "08- Rate Limiting Strategy: Throttle middleware, dynamic limits per user/plan",
+        "09- Handling Errors: Consistent JSON error envelopes, Exception rendering for APIs",
+        "10- Pagination: Cursor pagination vs LengthAware vs Simple, meta data",
+        "11- OpenAPI/Swagger: Spec definition, L5-Swagger or Scribe generation tools",
+        "12- Postman Workflows: Collections, Environments, Automated tests, Sharing",
+        "13- API Security: CORS configuration, CSP headers for APIs, Host header validation",
+        "14- Content Negotiation: Accept headers, returning generic error formats based on request",
+        "15- Third Party Integrations: Http Client (Guzzle wrapper), retrying, faking requests"
+    ]
+}

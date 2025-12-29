@@ -1,0 +1,13 @@
+{
+    "title": "Software Engineering Reading List",
+    "description": "Professional reading list for 2026.",
+    "items": [
+        "01- Read: The Core Software Development Process",
+        "02- Read: Distributed Systems",
+        "03- Read: Practices to write easy-to-understand code",
+        "04- Read: Managing Large-Scale Projects",
+        "05- Read: Techniques to refactor legacy code",
+        "06- Read: Building High-Performance Teams",
+        "07- Read: Systematic Debugging"
+    ]
+}
